@@ -1,0 +1,9 @@
+[Unit]
+Description=timer to update fullbogons
+After=time-sync.target
+
+[Timer]
+OnCalendar=*:0/15
+
+[Install]
+WantedBy=timers.target

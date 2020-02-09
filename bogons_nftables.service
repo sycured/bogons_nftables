@@ -1,0 +1,11 @@
+[Unit]
+Description=Download and load Sets for full bogons
+After=nftables.service
+
+[Service]
+WorkingDirectory=/root/bogons
+Type=oneshot
+ExecStart=/usr/local/sbin/bogons_nftables
+
+[Install]
+WantedBy=multi-user.target
