@@ -1,40 +1,40 @@
 #!/bin/bash
 
 fullv4() {
-    wget -N https://www.team-cymru.org/Services/Bogons/fullbogons-ipv4.txt 2>&1 > /dev/null | grep -q 'not modified on server. Omitting download'
+    wget -N https://www.team-cymru.org/Services/Bogons/fullbogons-ipv4.txt 2>&1 >/dev/null | grep -q 'not modified on server. Omitting download'
     if [ $? -ne 0 ]; then
-        echo "flush set ip filter bogons4" >> nft.rules
-        echo -n "add element ip filter bogons4 { " >> nft.rules
+        echo "flush set ip filter bogons4" >>nft.rules
+        echo -n "add element ip filter bogons4 { " >>nft.rules
         I=0
         egrep -v '^(#|$)' fullbogons-ipv4.txt |
-            while read CIDR ; do
-                if [[ ${I} = 0 ]]; then
+            while read CIDR; do
+                if [[ ${I} == 0 ]]; then
                     echo -n "${CIDR}"
                 else
                     echo -n ", ${CIDR}"
-                        fi
+                fi
                 I=1
-            done >> nft.rules
-        echo " }" >> nft.rules
+            done >>nft.rules
+        echo " }" >>nft.rules
     fi
 }
 
 fullv6() {
-    wget -N https://www.team-cymru.org/Services/Bogons/fullbogons-ipv6.txt 2>&1 > /dev/null | grep -q 'not modified on server. Omitting download'
+    wget -N https://www.team-cymru.org/Services/Bogons/fullbogons-ipv6.txt 2>&1 >/dev/null | grep -q 'not modified on server. Omitting download'
     if [ $? -ne 0 ]; then
-        echo "flush set ip6 filter bogons6" >> nft.rules
-        echo -n "add element ip6 filter bogons6 { " >> nft.rules
+        echo "flush set ip6 filter bogons6" >>nft.rules
+        echo -n "add element ip6 filter bogons6 { " >>nft.rules
         I=0
         egrep -v '^(#|$)' fullbogons-ipv6.txt |
-            while read CIDR ; do
-                if [[ ${I} = 0 ]]; then
+            while read CIDR; do
+                if [[ ${I} == 0 ]]; then
                     echo -n "${CIDR}"
                 else
                     echo -n ", ${CIDR}"
-                        fi
+                fi
                 I=1
-            done >> nft.rules
-        echo " }" >> nft.rules
+            done >>nft.rules
+        echo " }" >>nft.rules
     fi
 }
 
